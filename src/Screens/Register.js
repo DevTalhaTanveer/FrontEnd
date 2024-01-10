@@ -1,170 +1,230 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
-import LinearGradient from 'react-native-linear-gradient';
+import React, { useState, useCallback } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { TextInput, Button, Avatar, Text, Modal, Portal } from 'react-native-paper';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import RNPickerSelect from 'react-native-picker-select';
-import { CountryData,  getstatedata } from '../Components/Countries';
+import { COLORS } from '../constants/theme';
 
-const Register = ({ navigation }) => {
-  const[SelectedCountry,setSelectedCountry]=useState(null)
-  const[SelectedState,setSelectedState]=useState(null)
-  const [name, setName] = useState('');
+const SignupScreen = ({route}) => {
+  const {States,Country}=route.params
+ console.log(States);
+  const [firstName, setFirstName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
+  const [avatarSource, setAvatarSource] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
+console.log(country);
+console.log(state);
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
 
-  // Import the necessary functions from the 'country-state-city' library
+  const handleImageUpload = useCallback(() => {
+    const options = {
+      mediaType: 'photo',
+      quality: 0.5,
+      saveToPhotos: true,
+    };
 
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('Image selection canceled');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorCode, response.errorMessage);
+      } else {
+        const source = { uri: response.assets[0].uri };
+        setAvatarSource(source);
+      }
+    });
+
+    hideModal(); // Close the modal after image selection
+  }, []);
+
+  const handleImageUploadCamera = useCallback(() => {
+    const options = {
+      mediaType: 'photo',
+      quality: 0.5,
+      saveToPhotos: true,
+    };
+
+    launchCamera(options, (response) => {
+      if (response.didCancel) {
+        console.log('Image selection canceled');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorCode, response.errorMessage);
+      } else {
+        const source = { uri: response.assets[0].uri };
+        setAvatarSource(source);
+      }
+    });
+
+    hideModal(); // Close the modal after image selection
+  }, []);
+
+  const countryData = [
+    { label: 'USA', value: 'USA' },
+    { label: 'Canada', value: 'Canada' },
+    // Add more countries as needed
+  ];
+
+  const stateData = [
+    { label: 'New York', value: 'NY' },
+    { label: 'California', value: 'CA' },
+    // Add more states as needed
+  ];
 
   return (
-    <LinearGradient colors={['hsla(180, 4%, 27%, 1)', 'hsla(197, 39%, 26%, 1)']} style={styles.gradient}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <View style={styles.regText}>
-            <Text style={styles.title}>Create Account</Text>
-            <Text style={styles.subText}>Please fill the inputs below</Text>
-          </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <TouchableOpacity style={styles.avatarContainer}>
+        {avatarSource ? (
+          <Avatar.Image source={avatarSource} size={100} />
+        ) : (
+          <Avatar.Image source={{ uri: 'https://i.imgur.com/BoN9kdC.png' }} size={100} />
+        )}
+        <Text style={styles.uploadText} onPress={showModal}>
+          Upload Image
+        </Text>
+      </TouchableOpacity>
 
-          <TextInput
-            label="Name"
-            style={styles.input}
-            placeholder="Full Name"
-            mode="outlined"
-            value={name}
-            onChangeText={(text) => setName(text)}
-          />
-          <TextInput
-            label="Phone"
-            style={styles.input}
-            mode="outlined"
-            placeholder="Phone"
-            value={phone}
-            onChangeText={(text) => setPhone(text)}
-          />
-          <TextInput
-            label="Email"
-            style={styles.input}
-            mode="outlined"
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-          <TextInput
-            label="Password"
-            style={styles.input}
-            mode="outlined"
-            secureTextEntry
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-          <TextInput
-            label="Confirm Password"
-            style={styles.input}
-            mode="outlined"
-            secureTextEntry
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChangeText={(text) => setConfirmPassword(text)}
-          />
+      <Portal>
+        <Modal visible={isModalVisible} onDismiss={hideModal} contentContainerStyle={styles.modalContent}>
+          <ScrollView>
+            <TouchableOpacity onPress={handleImageUpload} style={styles.modalOption}>
+              <Text>Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleImageUploadCamera} style={styles.modalOption}>
+              <Text>On camera</Text>
+            </TouchableOpacity>
+            {/* Add camera option or other options as needed */}
+            <Button
+              mode="contained"
+              onPress={hideModal}
+              contentStyle={{ height: 50, width: '100%' }}
+              style={{
+                backgroundColor: COLORS.blue,
+                borderRadius: 50,
+                marginTop: 12,
+              }}
+              labelStyle={{ color: 'white' }}
+            >
+              Close
+            </Button>
+          </ScrollView>
+        </Modal>
+      </Portal>
 
-          <RNPickerSelect
-            placeholder={{ label: 'Select Country', value: null }}
-            items={CountryData}
-            onValueChange={(value) => setSelectedCountry(value)}
-            value={SelectedCountry}
-            style={pickerSelectStyles}
-          />
+      {/* Input fields */}
+      <TextInput label="First Name" value={firstName} onChangeText={(text) => setFirstName(text)} style={styles.input} />
+      <TextInput label="Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.input} />
+      
+      <TextInput
+  label="Phone Number"
 
-          {/* State Dropdown */}
-          <RNPickerSelect
-            placeholder={{ label: 'Select State', value: null }}
-            items={getstatedata}
-            onValueChange={(value) => setSelectedState(value)}
-            value={SelectedState}
-            style={pickerSelectStyles}
-          />
+  keyboardType="numeric"
+  value={phone}
+  onChangeText={(text) => setPhone(text)}
+  style={styles.input}
+/>
+   
+      <TextInput
+        label="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+        style={styles.input}
+      />
 
-       
+      {/* Country dropdown list */}
+      <RNPickerSelect
+        placeholder={{ label: 'Select Country', value: null }}
+        onValueChange={(isoCode) => setCountry(isoCode)}
+        items={Country}
+        style={pickerStyles}
+      />
 
-          <Button
-            mode="contained"
-            style={styles.signupButton}
-            onPress={() => console.log('Sign Up pressed')}>
-            Sign Up
-          </Button>
+      {/* State dropdown list */}
+      <RNPickerSelect
+        placeholder={{ label: 'Select State', value: null }}
+        onValueChange={(value) => setState(value)}
+        items={States(country)}
+        style={pickerStyles}
+      />
 
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.signInText}>Already have an account? Sign In</Text>
-          </TouchableOpacity>
-        </View>
-      </TouchableWithoutFeedback>
-    </LinearGradient>
+    
+       <Button
+              mode="contained"
+              onPress={() => console.log('Signup button pressed')}
+              contentStyle={{ height: 50, width: '100%' }}
+              style={{
+                backgroundColor: COLORS.blue,
+                borderRadius: 50,
+                marginTop: 12,
+              }}
+              labelStyle={{ color: 'white' }}
+            >
+                   Sign Up
+            </Button>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
   container: {
-    flex: 1,
     padding: 20,
-    justifyContent: 'center',
   },
-  regText: {
-    marginTop: 50,
+  avatarContainer: {
+    alignItems: 'flex-start',
     marginBottom: 20,
-    alignItems: 'center',
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 50,
-  },
-  subText: {
-    fontSize: 16,
-    fontWeight: '300',
-    marginVertical: 10,
-    color: 'white',
+    marginHorizontal: 20,
   },
   input: {
-    height: 40,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    marginBottom: 20,
+    overflow: 'hidden',
+  },
+  uploadText: {
+    marginTop: 5,
+    marginHorizontal: 10,
+    color: COLORS.blue,
+  },
+  modalContent: {
     backgroundColor: 'white',
-    color: 'black',
+    padding: 20,
+    margin: 20,
+    borderRadius: 20,
+  },
+  modalOption: {
+    padding: 25,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
   },
   signupButton: {
-    width: '100%',
     marginTop: 20,
-    backgroundColor: '#87CEEB',
-  },
-  signInText: {
-    marginTop: 20,
-    color: '#3498db',
-    textAlign: 'center',
   },
 });
 
-const pickerSelectStyles = StyleSheet.create({
+const pickerStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    marginBottom: 10,
-    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
     color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
     fontSize: 16,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    marginBottom: 10,
-    backgroundColor: 'white',
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
     color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
 
-export default Register;
+export default SignupScreen;

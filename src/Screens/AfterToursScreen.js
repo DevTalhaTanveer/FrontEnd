@@ -3,7 +3,7 @@ import {View, Image, Text} from 'react-native';
 import {Button, Divider, Title, IconButton} from 'react-native-paper';
 import AppIntroComponets from '../Components/AppIntroComponets';
 import AppSlogan from '../Components/AppSlogan';
-import {COLORS} from '../constants/theme';
+import {COLORS, LINEARCOLOR} from '../constants/theme';
 import LinearGradient from 'react-native-linear-gradient';
 const imageicon = [
   {
@@ -31,23 +31,25 @@ export default function AfterToursScreen({navigation}) {
 
   return (
     <LinearGradient
-      colors={['hsla(180, 4%, 27%, 1)', 'hsla(197, 39%, 26%, 1)']}
+      colors={LINEARCOLOR}
       style={{flex: 1}}>
       <View style={{padding: 1}}>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
+            justifyContent:'center',
             marginBottom: 16,
             gap: 5,
             paddingLeft: 5,
             paddingTop: 8,
+             
           }}>
           <Image
-            style={{width: 25, height: 25}}
+            style={{width: 25, height: 25,marginHorizontal:4}}
             source={require('../assets/appicons/icon.png')}
           />
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: COLORS.white}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: COLORS.blue, alignSelf:'center'}}>
             ItemSync
           </Text>
         </View>
@@ -57,7 +59,7 @@ export default function AfterToursScreen({navigation}) {
           bold={true}
           theme={{colors: {primary: 'tomato'}}}
         />
-        <AppSlogan lost={'Lost ?'} find={'Lets find'} togther={'It Together'} />
+        <AppSlogan lost={'Lost ?'} find={"Let's find it"} togther={'together...'} />
         {imageicon.map(item => (
           <AppIntroComponets key={item.id} icon={item.icon} text={item.Text} />
         ))}
@@ -76,11 +78,12 @@ export default function AfterToursScreen({navigation}) {
             style={{
               flex: 1,
               marginRight: 8,
-              backgroundColor: COLORS.statusColor,
+              backgroundColor: COLORS.blue,
               borderColor: 'white',
               borderWidth: 1,
               borderRadius: 50,
               padding: 12,
+              fontWeight:'bold',
               fontSize: 32,
             }}
             labelStyle={{color: 'white'}}>
@@ -91,14 +94,15 @@ export default function AfterToursScreen({navigation}) {
             onPress={() => navigation.navigate('Register')}
             style={{
               flex: 1,
-              backgroundColor: 'white',
+              backgroundColor: COLORS.blue,
               borderColor: 'white',
+              fontWeight:'bold',
               borderWidth: 1,
               borderRadius: 50,
               padding: 12,
               fontSize: 32,
             }}
-            labelStyle={{color: COLORS.statusColor}}>
+            labelStyle={{color: COLORS.white}}>
             Register
           </Button>
         </View>

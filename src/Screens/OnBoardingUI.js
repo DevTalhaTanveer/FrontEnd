@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Image, StatusBar, LogBox} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS, SIZES} from '../constants/theme';
+import {COLORS, LINEARCOLOR, SIZES} from '../constants/theme';
 
 const slides = [
   {
@@ -53,7 +53,7 @@ function OnBoardingUI({updateShowHomePage}) {
 
   return (
     <LinearGradient
-      colors={['hsla(180, 4%, 27%, 1)', 'hsla(197, 39%, 26%, 1)']}
+      colors={LINEARCOLOR}
       style={{flex: 1}}>
       <AppIntroSlider
         data={slides}
@@ -90,7 +90,7 @@ function OnBoardingUI({updateShowHomePage}) {
                     right: -12,
                     bottom: 12,
                     borderRadius: 19,
-                    shadowColor: COLORS.grey,
+                    shadowColor: COLORS.blue,
                     shadowOffset: {width: 0, height: 2},
                     shadowOpacity: 0.3,
                     shadowRadius: 4,
@@ -111,7 +111,8 @@ function OnBoardingUI({updateShowHomePage}) {
                 style={{
                   textAlign: 'center',
                   paddingTop: 5,
-                  color: COLORS.title,
+                  color: COLORS.grey,
+                  fontWeight:'bold'
                 }}>
                 {item.description}
               </Text>
@@ -119,7 +120,7 @@ function OnBoardingUI({updateShowHomePage}) {
           );
         }}
         activeDotStyle={{
-          backgroundColor: COLORS.white,
+          backgroundColor: COLORS.blue,
           width: 30,
         }}
         showSkipButton

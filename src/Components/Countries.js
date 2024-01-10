@@ -1,26 +1,27 @@
-import { Country ,State } from 'country-state-city';
+import { Country, State ,City} from 'country-state-city';
 import { useEffect, useState } from 'react';
 
-// console.log(Country);
-
 const allCountries = Country.getAllCountries();
-
+const allStates = State.getAllStates();
+console.log(City.getAllCities());
 const CountryData = allCountries.map((country, index) => {
   return {
     label: country.name,
-    value: country.name, // Modify this according to your needs
-    key: `country_${index}`, // Add a unique key for each country
+    value: country.isoCode,
+    key: `country_${index}`,
   };
 });
 
-// console.log(countriesData);
 
-const getstatedata = State.getAllStates().map((state, index) => {
-  return {
+// Function to get states based on the selected country's isoCode
+const getStatesByCountryIsoCode = (selectedCountryIsoCode) => {
+  const filteredStates = allStates.filter((state) => state.countryCode === selectedCountryIsoCode);
+
+  return filteredStates.map((state, index) => ({
     label: state.name,
-    isoCode: state.isoCode, // Modify this according to your needs
-    key: `state_${index}`, // Add a unique key for each state
-  };
-});
+    value: state.isoCode,
+    key: `state_${index}`,
+  }));
+};
 
-export { CountryData, getstatedata };
+export { CountryData, getStatesByCountryIsoCode };

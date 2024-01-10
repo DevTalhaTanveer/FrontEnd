@@ -10,7 +10,7 @@ const AppSlogan = ({lost, find, togther}) => {
           fontFamily: 'sans-serif',
           fontSize: 50,
           fontWeight: 'bold',
-          color: COLORS.white,
+          color: COLORS.blue,
         }}>
         {lost}
       </Text>
@@ -20,7 +20,7 @@ const AppSlogan = ({lost, find, togther}) => {
           fontFamily: 'Rubik-Bold',
           fontSize: 50,
           fontWeight: 'bold',
-          color: 'yellow',
+          color: COLORS.statusColor,
         }}>
         {find}
       </Text>
@@ -29,7 +29,7 @@ const AppSlogan = ({lost, find, togther}) => {
           fontFamily: 'Rubik-Medium',
           fontSize: 50,
           fontWeight: 'bold',
-          color: COLORS.white,
+          color: COLORS.title,
         }}>
         {togther}
       </Text>

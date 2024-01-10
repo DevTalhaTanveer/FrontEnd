@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import {TextInput, Button, Text} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS} from '../constants/theme';
+import {COLORS, LINEARCOLOR} from '../constants/theme';
+
+
 
 const Login = ({navigation}) => {
   React.useLayoutEffect(() => {
@@ -39,46 +41,44 @@ const Login = ({navigation}) => {
 
   return (
     <LinearGradient
-      colors={['hsla(180, 4%, 27%, 1)', 'hsla(197, 39%, 26%, 1)']}
-       style={{flex: 1, justifyContent: 'center' ,paddingHorizontal:5}}>
+      colors={LINEARCOLOR}
+       style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 20}}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
           <Image
-            source={require('../assets/Onboarding3.png')}
+            source={require('../assets/appicons/icon.png')}
             style={styles.logo}
           />
 
           <Text style={styles.title}>Login</Text>
 
-          <Text style={styles.subtitle}>Please sign in to continue</Text>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              label="Email"
-              value={email}
-              onChangeText={text => setEmail(text)}
-              left={<TextInput.Icon name="email" />}
-              style={styles.input}
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              label="Password"
-              value={password}
-              onChangeText={text => setPassword(text)}
-              secureTextEntry
-              left={<TextInput.Icon name="lock" />}
-              style={styles.input}
-            />
-          </View>
+          <Text style={styles.subtitle}>Sign in to continue</Text>
+  <TextInput
+            label="Email"
+            mode="outlined"
+            style={styles.input}
+            placeholder="Enter your email"
+            theme={{ colors: { primary: COLORS.blue, underlineColor: 'transparent' } }}
+          />
+          <TextInput
+            label="Password"
+            mode="outlined"
+            onChangeText={(text) => setPassword(text)}
+            style={styles.input}
+            secureTextEntry
+            placeholder="Enter the password"
+            theme={{ colors: { primary: COLORS.blue, underlineColor: 'transparent' } }}
+          />
+         
+        
+     
 
           <Button
             mode="contained"
             onPress={handleLogin}
             contentStyle={{height: 50, width: '95%'}}
             style={{
-              backgroundColor: COLORS.statusColor,
+              backgroundColor: COLORS.blue,
               borderRadius: 50,
               marginTop: 12,
             }}
@@ -108,16 +108,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 150,
-    height: 150,
-    marginBottom: 16,
+    width: 200,
+    height: 250,
+  
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 8,
     alignSelf: 'flex-start',
-    color: COLORS.white,
+    color: COLORS.title,
   },
   subtitle: {
     fontSize: 16,
@@ -128,16 +128,18 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
     margin: 16,
-    backgroundColor: 'transparent',
+    backgroundColor: COLORS.blue,
   },
   input: {
-    borderRadius: 14,
-    color: 'white',
-    overflow: 'hidden',
+    width: '100%',
+    marginBottom: 20,
+    overflow:'hidden',
+   
   },
   forgotPassword: {
     color: 'blue',
     marginBottom: 16,
+    marginTop:12,
     textDecorationLine: 'underline',
   },
   signupText: {

@@ -4,13 +4,14 @@ const {width, height} = Dimensions.get('screen');
 
 export const COLORS = {
   primary: '#f52d56',
-  title: '#ffff',
+  title: '#000',
   white: '#FFFFFF',
   lightGrey: '#D3D6D6',
   grey: '#C1C0C9',
   blue: '#087BB6',
   yellow: '#F4D03F',
   statusColor: '#333333',
+  BlockColor:'#adaba0'
 };
 
 export const SIZES = {
@@ -24,3 +25,5 @@ export const SIZES = {
   width,
   height,
 };
+
+export const LINEARCOLOR=['hsla(270, 4%, 100%, 1)', 'hsla(270, 39%, 100%, 1)']

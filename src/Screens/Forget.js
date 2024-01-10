@@ -4,6 +4,7 @@ import React from 'react';
 import { View, StyleSheet, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
+import { COLORS, LINEARCOLOR } from '../constants/theme';
 
 const ForgotPasswordScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
@@ -19,15 +20,15 @@ const ForgotPasswordScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={handleScreenPress}>
       <LinearGradient
-        colors={['hsla(180, 4%, 27%, 1)', 'hsla(197, 39%, 26%, 1)']}
+        colors={LINEARCOLOR}
         style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 20 }}
       >
         <View style={styles.container}>
           {/* Logo */}
-          <Image source={require('../assets/location.png')} style={styles.logo} />
+          <Image source={require('../assets/Forgotpassword.png')} style={styles.logo} />
 
           {/* Heading */}
-          <Text style={styles.heading}>Forgot Password</Text>
+          <Text style={styles.heading}>Enter Email</Text>
 
           {/* Subtext */}
           <Text style={styles.subText}>
@@ -43,11 +44,18 @@ const ForgotPasswordScreen = ({ navigation }) => {
           />
 
           {/* Reset Password Button */}
-          <Button
+       
+             <Button
             mode="contained"
-            style={styles.button}
             onPress={() => navigation.navigate('OPTScreen')}
-          >
+            
+            contentStyle={{height: 50, width: '95%'}}
+            style={{
+              backgroundColor: COLORS.blue,
+              borderRadius: 50,
+              marginTop: 12,
+            }}
+            labelStyle={{color: 'white'}}>
             Reset Password
           </Button>
 
@@ -69,17 +77,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 250,
+    height: 300,
     marginBottom: 20,
   },
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+   
   },
   subText: {
     textAlign: 'center',

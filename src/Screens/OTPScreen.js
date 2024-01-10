@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet,TouchableWithoutFeedback,Keyboard } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
+import { COLORS, LINEARCOLOR } from '../constants/theme';
 const OTPScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,15 +27,15 @@ const OTPScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={handleScreenPress}>
 
     <LinearGradient
-      colors={['hsla(180, 4%, 27%, 1)', 'hsla(197, 39%, 26%, 1)']}
+      colors={LINEARCOLOR}
       style={{flex: 1, justifyContent: 'center' ,paddingHorizontal:20}}>
 
     <View style={styles.container}>
       {/* Logo */}
-      <Image source={require('../assets/location.png')} style={styles.logo} />
-
+      <Image source={require('../assets/EnterOTP.png')} style={styles.logo} />
       <Text style={styles.heading}>Enter OTP</Text>
       <Text style={styles.subHeading}>We've sent a verification code to your mobile number</Text>
+
 
       <TextInput
         label="Enter OTP"
@@ -45,9 +46,20 @@ const OTPScreen = ({ navigation }) => {
         style={styles.input}
       />
 
-      <Button mode="contained" contentStyle={styles.button} onPress={handleVerifyOTP}>
-        Verify OTP
-      </Button>
+      
+       <Button
+            mode="contained"
+            onPress={handleVerifyOTP}
+            
+            contentStyle={{height: 50, width: '95%'}}
+            style={{
+              backgroundColor: COLORS.blue,
+              borderRadius: 50,
+              marginTop: 12,
+            }}
+            labelStyle={{color: 'white'}}>
+             Verify OTP
+          </Button>
     </View>
     </LinearGradient>
 
@@ -58,13 +70,14 @@ const OTPScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 300,
+    height: 300,
+    marginTop:60,
     marginBottom: 20,
   },
   button: {
@@ -75,10 +88,12 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
+    alignSelf:'flex-start',
     marginBottom: 10,
   },
   subHeading: {
     fontSize: 16,
+    alignSelf:'flex-start',
     textAlign: 'center',
     marginBottom: 20,
   },

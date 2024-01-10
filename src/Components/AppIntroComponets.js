@@ -2,11 +2,12 @@ import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
 import {IconButton, MD3Colors} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { COLORS } from '../constants/theme';
 export default function AppIntroComponets({icon, text}) {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <Icon name={icon} size={30} color="white" />
+        <Icon name={icon} size={30} color={COLORS.white} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.text}>{text}</Text>
@@ -17,7 +18,8 @@ export default function AppIntroComponets({icon, text}) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(50, 50, 50, 0.9)',
+    backgroundColor: COLORS.BlockColor,
+    overflow:'hidden',
     borderRadius: 16,
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOffset: {width: 0, height: 4},
@@ -33,16 +35,21 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   iconContainer: {
-    backgroundColor: 'light-grey',
+    backgroundColor: COLORS.blue,
+    overflow:'hidden',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 50,
     marginRight: 10,
+    borderColor:COLORS.blue
   },
   textContainer: {
     flex: 1, // Use flex to allow text to take remaining space
   },
   text: {
-    color: 'white',
+    overflow:'hidden',
+    color: COLORS.white,
     fontSize: 18,
+    fontWeight:'bold',
+    fontFamily: 'Rubik-Medium'
   },
 });
